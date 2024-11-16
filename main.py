@@ -30,6 +30,10 @@ if not cap.isOpened():
     print("Error: Could not open video capture.")
     exit()
 
+def p2p(point) -> tuple:
+    print(int(point['x']), int(point['y']))
+    return int(point['x']), int(point['y'])
+
 while cap.isOpened():
     ret, frame = cap.read()
     if not ret:
@@ -72,6 +76,9 @@ while cap.isOpened():
             for i, point in enumerate(arm):
                 p = (int(arm[i]['x']), int(arm[i]['y']))
                 cv2.circle(frame, p, 5, (0, 255, 0), -1)
+                if i != len(arm)-1:
+                    cv2.line(frame, p2p(point), p2p(arm[i + 1]), (0, 255, 0), 3)
+                    # cv2.line(frame, (1000, 1000), (500,500), (0, 255, 0), 3)
     else:
         print("No pose landmarks detected.")
 
