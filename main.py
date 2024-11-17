@@ -1,5 +1,39 @@
 #!/usr/bin/env python3
 import math
+import time
+
+import tkinter
+import webbrowser
+
+
+def toggle_running():
+    global running
+    running = not running
+
+def quit_app():
+    cv2.destroyAllWindows()
+    root.destroy()
+
+
+root = tkinter.Tk()
+root.title("Control window")
+
+def launcher(url):
+    return lambda: webbrowser.open(url)
+
+games = {
+    "Run 3": "https://run3free.github.io/",
+    "Subway Surfers": "https://poki.com/en/g/subway-surfers",
+    "Temple Run": "https://poki.com/en/g/temple-run-2",
+}
+
+for game, url in games.items():
+    button = tkinter.Button(root, text=game, command=launcher(url))
+    button.pack()
+
+quit_button = tkinter.Button(root, text="Quit", command=quit_app)
+quit_button.pack()
+
 
 import cv2
 import mediapipe as mp
@@ -11,7 +45,11 @@ pose = mp_pose.Pose()
 mp_drawing = mp.solutions.drawing_utils
 
 # Start video capture
-cap = cv2.VideoCapture(0)  # 0 is the default camera
+while True:
+    cap = cv2.VideoCapture(0)  # 0 is the default camera
+    if cap.isOpened():
+        break
+    time.sleep(1)
 
 arm_landmarks = {
     'left_arm': [
@@ -109,11 +147,12 @@ def handle_frame(frame, controls):
 controls1 = controls.Controls()
 controls2 = controls.Controls()
 
-while cap.isOpened():
+def main_loop():
+    if not cap.isOpened(): return
     ret, frame = cap.read()
     if not ret:
         print("Error: Could not read frame.")
-        break
+        return quit_app()
 
     frame = cv2.flip(frame, 1)
     handle_frame(frame, controls1)
@@ -122,8 +161,12 @@ while cap.isOpened():
 
     # Break loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+        return quit_app()
+
+    root.after(10, main_loop)
 
 # Release resources
+main_loop()
+root.mainloop()
 cap.release()
 cv2.destroyAllWindows()
