@@ -2,6 +2,9 @@ import pyautogui
 
 ENABLE = True
 
+def space():
+    print('space')
+    if ENABLE: pyautogui.press(' ')
 def down():
     print('d')
     if ENABLE: pyautogui.press('down')

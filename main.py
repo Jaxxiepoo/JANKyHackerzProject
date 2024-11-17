@@ -44,6 +44,7 @@ left = False
 right = False
 up = False
 down = False
+space = False
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -130,8 +131,6 @@ while cap.isOpened():
                 down = True
         else: down = False
 
-
-
         THRESHOLD = math.hypot(arm_positions['right_arm'][1]['x'] - arm_positions['right_arm'][0]['x'], arm_positions['right_arm'][1]['y'] - arm_positions['right_arm'][0]['y'])
         if arm_positions['right_arm'][2]['x'] - arm_positions['right_arm'][0]['x'] > THRESHOLD:
             if not right:
@@ -144,6 +143,12 @@ while cap.isOpened():
                 controls.left()
                 left = True
         else: left = False
+
+        if arm_positions['right_arm'][2]['x'] < arm_positions['left_arm'][2]['x']:
+            if not space:
+                controls.space()
+                space = True
+        else: space = False
 
         cv2.line(frame, (0, int(shoulder_average)), (500,  int(shoulder_average)), (255, 100, 0), 2)
         cv2.line(frame, (0, int(shoulder_average + shoulder_threshold)), (500,  int(shoulder_average + shoulder_threshold)), (255, 255, 0), 2)
