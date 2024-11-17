@@ -32,7 +32,7 @@ games = {
     "Run 3": "https://run3free.github.io/",
     "Subway Surfers": "https://poki.com/en/g/subway-surfers",
     "Temple Run": "https://poki.com/en/g/temple-run-2",
-    "Paper io: ": "https://paper-io.com/",
+    "Paper io": "https://paper-io.com/",
 }
 
 for game, url in games.items():
