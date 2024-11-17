@@ -100,16 +100,37 @@ while cap.isOpened():
         past_shoulder_poses[shoulder_pos_i] = cur_shoulder_y
         shoulder_pos_i = (shoulder_pos_i + 1) % SHOULDER_COUNT_TO_AVERAGE
 
-        if cur_shoulder_y < shoulder_average - 100:
+        # if cur_shoulder_y < shoulder_average - 100:
+        #     if not up:
+        #         controls.up()
+        #         up = True
+        # else: up = False
+        # if cur_shoulder_y < shoulder_average + 100:
+        #     if not down:
+        #         controls.down()
+        #         down = True
+        # else: down = False
+
+        # elbows above shoulders
+        def is_wrist_up(arm):
+            return arm_positions[arm][0]['y'] > arm_positions[arm][1]['y']
+
+        def is_wrist_down(arm):
+            return arm_positions[arm][2]['y'] > arm_positions[arm][1]['y']
+
+        if is_wrist_up('right_arm') and is_wrist_up('left_arm'):
             if not up:
                 controls.up()
                 up = True
         else: up = False
-        if cur_shoulder_y < shoulder_average + 100:
+
+        if not up and is_wrist_down('right_arm') and is_wrist_down('left_arm'):
             if not down:
                 controls.down()
                 down = True
         else: down = False
+
+
 
         THRESHOLD = math.hypot(arm_positions['right_arm'][1]['x'] - arm_positions['right_arm'][0]['x'], arm_positions['right_arm'][1]['y'] - arm_positions['right_arm'][0]['y'])
         if arm_positions['right_arm'][2]['x'] - arm_positions['right_arm'][0]['x'] > THRESHOLD:
