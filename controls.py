@@ -1,10 +1,16 @@
 import pyautogui
 
+ENABLE = True
+
 def down():
-    pyautogui.press('down')
+    print('d')
+    if ENABLE: pyautogui.press('down')
 def up():
-    pyautogui.press('up')
+    print('u')
+    if ENABLE: pyautogui.press('up')
 def right():
-    pyautogui.press('right')
+    print('r')
+    if ENABLE: pyautogui.press('right')
 def left():
-    pyautogui.press('left')
+    print('l')
+    if ENABLE: pyautogui.press('left')
