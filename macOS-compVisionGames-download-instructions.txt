@@ -1,3 +1,8 @@
-Copy and paste the following line of code into terminal:
+Copy and paste the following line of code into terminal (and then hit enter) to download and run the vision interface for macOS:
 
-mkdir -p vision-interface && cd vision-interface && curl -L -o main "https://github.com/Jaxxiepoo/JANKyHackerzProject/releases/download/test/macos-vision-interface" > main && chmod +x main && ./main
+cd ~ && mkdir -p vision-interface && cd vision-interface && curl -L -o main "https://github.com/Jaxxiepoo/JANKyHackerzProject/releases/download/final/macos-vision-interface" > main && chmod +x main && ./main
+
+
+run existing install (paste into terminal and hit enter):
+
+~/vision-interface/main
