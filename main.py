@@ -3,8 +3,13 @@ import math
 import time
 
 import tkinter
+from tkinter import font
 import webbrowser
 
+import cv2
+import mediapipe as mp
+
+import controls
 
 def toggle_running():
     global running
@@ -18,6 +23,8 @@ def quit_app():
 root = tkinter.Tk()
 root.title("Control window")
 
+button_font = font.Font()
+
 def launcher(url):
     return lambda: webbrowser.open(url)
 
@@ -28,17 +35,11 @@ games = {
 }
 
 for game, url in games.items():
-    button = tkinter.Button(root, text=game, command=launcher(url))
+    button = tkinter.Button(root, text=game, command=launcher(url), font=button_font)
     button.pack()
 
-quit_button = tkinter.Button(root, text="Quit", command=quit_app)
+quit_button = tkinter.Button(root, text="Quit", command=quit_app, font=button_font)
 quit_button.pack()
-
-
-import cv2
-import mediapipe as mp
-
-import controls
 
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose()
@@ -143,9 +144,7 @@ def handle_frame(frame, controls):
 
 
 
-
 controls1 = controls.Controls()
-controls2 = controls.Controls()
 
 def main_loop():
     if not cap.isOpened(): return
